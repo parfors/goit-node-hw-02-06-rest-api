@@ -77,7 +77,7 @@ const updateContact = async (contactId, body) => {
     const contacts = await getContacts();
     const index = contacts.findIndex((el) => el.id === String(contactId));
     if (index === -1) {
-      return { message: "there is no contact for that index" };
+      return null;
     }
     contacts[index] = { ...contacts[index], ...body };
     updateContacts(contacts);
@@ -94,5 +94,3 @@ module.exports = {
   addContact,
   updateContact,
 };
-
-console.log(listContacts());
