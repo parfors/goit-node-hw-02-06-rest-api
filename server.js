@@ -1,5 +1,16 @@
 const app = require("./app");
+const mongoose = require("mongoose");
 
-app.listen(3000, () => {
-  console.log("Server running. Use our API on port: 3000");
-});
+const { HOST, MONGO_URL = 8080 } = process.env;
+
+mongoose
+  .connect(MONGO_URL)
+  .then(
+    app.listen(HOST, () => {
+      console.log("Server running. Use our API on port: 8080");
+    })
+  )
+  .catch((error) => {
+    console.log(error.message);
+    process.exit(1);
+  });
