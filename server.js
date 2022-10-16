@@ -7,7 +7,7 @@ mongoose
   .connect(MONGO_URL)
   .then(
     app.listen(HOST, () => {
-      console.log("Server running. Use our API on port: 8080");
+      console.log("Database connection successful. Use API on port: 8080");
     })
   )
   .catch((error) => {
