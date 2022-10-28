@@ -14,9 +14,9 @@ const register = async (req, res, next) => {
     password: hashPassword,
     subscription,
   });
-  res
-    .status(201)
-    .json({ email: result.email, subscription: result.subscription });
+  res.status(201).json({
+    user: { email: result.email, subscription: result.subscription },
+  });
 };
 
 module.exports = register;

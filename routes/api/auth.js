@@ -6,6 +6,7 @@ const {
 } = require("../../models/users");
 const ctrl = require("../../controllers/auth");
 const { ctrlWrapper } = require("../../helpers");
+const { authenticate } = require("../../middleWares");
 
 router.post(
   "/signup",
@@ -19,4 +20,5 @@ router.post(
   ctrlWrapper(ctrl.login)
 );
 
+router.post("/users/logout", authenticate);
 module.exports = router;
