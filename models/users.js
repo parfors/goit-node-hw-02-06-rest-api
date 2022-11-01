@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema({
     type: String,
     default: null,
   },
+  avatarURL: String,
 });
 
 const userRegistrationSchema = Joi.object({
