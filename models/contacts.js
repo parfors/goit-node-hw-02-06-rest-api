@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 const { handelSaveErrors } = require("../helpers");
 
-const contactSchema = new mongoose.Schema(
+const contactSchema = new Schema(
   {
     name: {
       type: String,
@@ -18,6 +18,11 @@ const contactSchema = new mongoose.Schema(
     favorite: {
       type: Boolean,
       default: false,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
     },
   },
   {
@@ -46,7 +51,7 @@ const patchSchema = Joi.object({
 
 contactSchema.post("save", handelSaveErrors);
 
-const Contact = mongoose.model("Contacts", contactSchema);
+const Contact = model("Contacts", contactSchema);
 
 const schemas = {
   addSchema,

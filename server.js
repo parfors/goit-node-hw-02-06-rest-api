@@ -1,7 +1,7 @@
 const app = require("./app");
 const mongoose = require("mongoose");
 
-const { HOST, MONGO_URL = 8080 } = process.env;
+const { HOST = 8080, MONGO_URL } = process.env;
 
 mongoose
   .connect(MONGO_URL)
