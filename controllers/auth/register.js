@@ -1,10 +1,12 @@
 const { User } = require("../../models/users");
 const bcrypt = require("bcrypt");
-const { RequestError } = require("../../helpers");
+const { RequestError, sendEmail, createVerifyEmail } = require("../../helpers");
 const gravatar = require("gravatar");
+const { v4: uuid } = require("uuid");
 
 const register = async (req, res, next) => {
   const { email, subscription, password } = req.body;
+  const verificationToken = uuid();
   const user = await User.findOne({ email });
   if (user) {
     throw RequestError(409, "Email in use");
@@ -16,7 +18,14 @@ const register = async (req, res, next) => {
     password: hashPassword,
     subscription,
     avatarURL,
+    verificationToken,
   });
+
+  const mail = createVerifyEmail(email, verificationToken);
+  console.log(mail);
+
+  await sendEmail(mail);
+
   res.status(201).json({
     user: { email: result.email, subscription: result.subscription },
   });

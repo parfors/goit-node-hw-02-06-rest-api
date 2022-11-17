@@ -29,6 +29,14 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  verificationToken: {
+    type: String,
+    required: [true, "Verify token is required"],
+  },
+  verify: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const userRegistrationSchema = Joi.object({
@@ -37,12 +45,17 @@ const userRegistrationSchema = Joi.object({
   subscription: Joi.string().valid(...subscriptionTypes),
 });
 
+const emailVerificationSchema = Joi.object({
+  email: Joi.string().required().pattern(emailRegexp),
+});
+
 userSchema.post("save", handelSaveErrors);
 
 const User = mongoose.model("users", userSchema);
 
 const schemas = {
   userRegistrationSchema,
+  emailVerificationSchema,
 };
 
 module.exports = {
